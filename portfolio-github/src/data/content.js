@@ -434,7 +434,7 @@ export const POSTS = [
     ],
   },
   {
-    title: "Monter un cluster web + base de données haute disponibilité avec Nginx, Galera et ProxySQL",
+    title: "Infra web haute dispo — Nginx, Galera & ProxySQL",
     excerpt:
       "Concevoir une infra web sans point de défaillance : 3 serveurs web répartis par Nginx, et une base de données en cluster MariaDB/Galera pilotée par ProxySQL pour garantir la continuité de service.",
     date: "2026-07-15",
