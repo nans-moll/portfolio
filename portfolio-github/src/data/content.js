@@ -227,18 +227,73 @@ export const POSTS = [
     ],
   },
   {
-    title: "Stage YoukiCorp : monter une infrastructure complète",
+    title: "Stage — retour d'expérience chez YoukiCorp",
     excerpt:
-      "Retour sur un stage que j'ai adoré : Docker, protocoles de mail, hébergement web, DNS Technitium, pare-feu OPNsense et VPN sous Windows Server.",
+      "Retour sur mon stage en distanciel chez YoukiCorp : Docker, protocoles de mail, hébergement web, DNS (Technitium), pare-feu OPNsense et VPN Windows Server.",
     date: "2025",
-    read: "6 min",
+    read: "5 min",
     tag: "Stage",
     stack: ["Docker", "Technitium (DNS)", "OPNsense", "Règles de pare-feu", "VPN Windows Server", "Mail"],
     repo: "",
-    how: [
-      "Un stage que j'ai vraiment adoré : il m'a énormément apporté en connaissances sur l'infrastructure et le réseau.",
-      "J'ai travaillé sur la conteneurisation avec Docker et sur les protocoles de mail, puis j'ai réalisé une infrastructure complète incluant l'hébergement d'un site web.",
-      "Côté réseau et sécurité : mise en place du DNS avec Technitium, configuration du pare-feu OPNsense et de ses règles de filtrage, et déploiement d'un VPN sous Windows Server.",
+    body: [
+      {
+        type: "p",
+        text: "Petit retour sur mon stage chez YoukiCorp, réalisé en distanciel. En quelques semaines, j'ai pu mettre les mains dans une infrastructure complète, du réseau jusqu'à l'hébergement — c'est clairement l'expérience qui m'a le plus fait progresser jusqu'ici.",
+      },
+      { type: "h", text: "Présentation de l'entreprise" },
+      {
+        type: "p",
+        text: "YoukiCorp, c'est en réalité un auto-entrepreneur qui a monté chez lui une infrastructure de niveau professionnel, digne d'une véritable entreprise. On y retrouve tout un écosystème complet — serveurs, virtualisation, réseau segmenté, services hébergés et sécurité — qui sert aussi bien à ses propres projets qu'à ses prestations. C'est justement ce qui rend le stage aussi formateur : on travaille sur une infra réaliste et complète, sans les lourdeurs d'une grande structure, et avec un vrai accès au « pourquoi » derrière chaque choix technique.",
+      },
+      { type: "h", text: "Les outils et l'environnement" },
+      {
+        type: "p",
+        text: "L'environnement de travail tournait autour de plusieurs briques complémentaires : Docker pour la conteneurisation des services, un serveur Windows Server, un pare-feu OPNsense pour la sécurité réseau, Technitium pour la résolution DNS, et un VPN pour les accès distants. La communication, en interne comme pour le suivi, passait par des canaux dédiés (messagerie d'équipe, mail).",
+      },
+      { type: "h", text: "Ce que j'ai fait" },
+      {
+        type: "p",
+        text: "Le fil rouge du stage a été la réalisation d'une infrastructure complète, de bout en bout :",
+      },
+      {
+        type: "ul",
+        items: [
+          "Conteneurisation de services avec Docker, pour des déploiements propres et reproductibles.",
+          "Mise en place et compréhension des protocoles de mail (mise en service et tests d'un service de messagerie).",
+          "Hébergement d'un site web au sein de cette infrastructure.",
+          "Résolution DNS interne avec Technitium.",
+          "Sécurisation réseau avec OPNsense : configuration du pare-feu et écriture des règles de filtrage.",
+          "Déploiement d'un VPN sous Windows Server pour les accès distants sécurisés.",
+        ],
+      },
+      { type: "h", text: "Un stage en distanciel" },
+      {
+        type: "p",
+        text: "Le stage s'est déroulé à distance, et honnêtement ça a été un vrai plus : ça nous a permis de moins nous prendre la tête, de travailler dans de bonnes conditions et d'avancer sereinement, tout en gardant le contact pour poser des questions quand il le fallait.",
+      },
+      { type: "h", text: "Compétences acquises" },
+      {
+        type: "p",
+        text: "J'en ressors avec une vision beaucoup plus concrète de ce qu'est monter une infra complète : comment les briques (DNS, pare-feu, VPN, conteneurs, hébergement) s'articulent réellement entre elles. J'ai aussi gagné en autonomie et compris l'importance de bien documenter ce qu'on fait pour pouvoir y revenir plus tard.",
+      },
+      { type: "h", text: "Bilan — ressenti" },
+      {
+        type: "p",
+        text: "Pour être honnête, ça a été assez difficile par moments : il a fallu s'accrocher et beaucoup chercher. Mais ça en vaut largement la peine pour progresser. C'était un super stage, formateur du début à la fin, qui m'a conforté dans l'envie de continuer dans l'infra et le réseau.",
+      },
+      { type: "h", text: "Points d'amélioration" },
+      {
+        type: "ul",
+        items: [
+          "Prise en main des outils : au début, je perdais du temps sur la configuration de certaines briques (OPNsense, Docker). Une montée en compétence plus rapide dès les premiers jours m'aurait rendu plus efficace.",
+          "Documentation : mieux documenter au fil de l'eau, tant que c'est frais, plutôt qu'après coup.",
+          "Organisation à distance : en distanciel, mieux structurer mes journées et prioriser les tâches pour ne pas m'éparpiller.",
+        ],
+      },
+      {
+        type: "p",
+        text: "Au final, une première vraie immersion très positive, avec des enseignements que je compte bien réutiliser pour la suite de mon parcours.",
+      },
     ],
   },
   {
