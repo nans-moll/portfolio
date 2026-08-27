@@ -1,4 +1,0 @@
-Dépose ton CV ici sous le nom exact : cv.pdf
-(dossier public/ à la racine du projet)
-
-Le bouton "Télécharger mon CV" (section Contact) l'ouvrira automatiquement.
