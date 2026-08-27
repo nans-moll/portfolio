@@ -1,0 +1,6 @@
+Dépose ta photo ici sous le nom exact : moi.jpg
+(dossier public/ à la racine du projet)
+
+Elle s'affichera automatiquement dans la section "À propos".
+Formats acceptés : jpg. Si tu utilises un .png, renomme la ligne
+src dans src/sections/About.jsx en "moi.png".

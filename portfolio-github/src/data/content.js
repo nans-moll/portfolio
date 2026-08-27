@@ -102,7 +102,7 @@ export const INTERESTS = [
 ];
 
 export const HOMELAB_INTRO =
-  "Mon homelab héberge une stack média complète en Docker, orchestrée derrière Traefik (reverse proxy + HTTPS). Les demandes passent par Jellyseerr (et un bot Discord), l'automatisation *arr (Prowlarr, Radarr, Sonarr, Bazarr) pilote les téléchargements via SABnzbd (Usenet) et qBittorrent derrière un VPN ProtonVPN (gluetun). Tout est rangé dans /mnt/medias puis diffusé par Jellyfin, avec Portainer et Homarr pour la supervision et Discarr pour les notifications Discord.";
+  "Serveur média auto-hébergé sous Debian (VM docker-tf) qui fait tourner 14 conteneurs Docker, organisés en trois couches : téléchargement → automatisation → diffusion. Les demandes passent par Jellyseerr (et un bot Discord), l'automatisation *arr (Prowlarr, Radarr, Sonarr, Bazarr) pilote les téléchargements via SABnzbd (Usenet) et qBittorrent isolé dans un tunnel ProtonVPN (gluetun), puis tout est rangé dans /mnt/medias et diffusé par Jellyfin. L'ensemble est orchestré via Portainer et exposé par Traefik.";
 
 // Stack représentée en couches (diagramme sur-mesure).
 export const HOMELAB_STACK = [
@@ -159,6 +159,37 @@ export const HOMELAB_STACK = [
       { icon: "LayoutDashboard", name: "Homarr", sub: ":7575" },
       { icon: "Bell", name: "Discarr", sub: "notifications" },
     ],
+  },
+];
+
+// Cycle complet d'une demande (de la demande à la lecture).
+export const HOMELAB_FLOW = [
+  "Demande — un utilisateur demande un film ou une série via Jellyseerr (ou le bot Discord).",
+  "Recherche — Radarr (films) ou Sonarr (séries) interroge les indexeurs via Prowlarr.",
+  "Téléchargement — le job part vers qBittorrent (torrent, via VPN) ou SABnzbd (Usenet) selon la source.",
+  "Rangement — une fois terminé, le fichier est renommé et déplacé dans /mnt/medias/films ou /series.",
+  "Sous-titres — Bazarr détecte le nouveau média et récupère les sous-titres.",
+  "Diffusion — Jellyfin indexe le fichier et le rend disponible au streaming.",
+  "Notification — Discarr prévient sur Discord que le contenu est prêt.",
+];
+
+// Points techniques que je mets en avant.
+export const HOMELAB_NOTES = [
+  {
+    title: "Torrent isolé en VPN",
+    text: "qBittorrent passe à travers gluetun (kill-switch ProtonVPN WireGuard) : si le VPN tombe, le trafic est coupé et l'IP réelle n'est jamais exposée. SABnzbd (Usenet) est déjà chiffré en SSL.",
+  },
+  {
+    title: "Import instantané (hardlinks)",
+    text: "Sonarr, Radarr et SABnzbd partagent le même dossier downloads/ via un montage /data commun — hardlinks, pas de copie inutile, import immédiat.",
+  },
+  {
+    title: "Diffusion privée",
+    text: "Jellyfin n'est accessible que via VPN, le DNS interne pointant vers 192.168.1.50.",
+  },
+  {
+    title: "Stockage",
+    text: "~3,4 To dédiés aux médias (/mnt/medias), les données Docker sur /home.",
   },
 ];
 
@@ -495,21 +526,6 @@ FROM stats_mysql_connection_pool;`,
         type: "p",
         text: "Avec cette architecture, la panne d'un seul serveur web ou d'un seul nœud de base de données n'interrompt plus le service : Nginx redistribue le trafic HTTP restant, et Galera continue de répondre avec les nœuds encore disponibles, ProxySQL absorbant la répartition des requêtes SQL. C'est loin d'être une architecture « enterprise-grade » complète (pas de vraie détection de panne côté Nginx par exemple), mais ça couvre déjà l'essentiel de ce qu'on attend d'une infrastructure tolérante aux pannes à cette échelle.",
       },
-    ],
-  },
-  {
-    title: "Ymmo : concevoir un réseau multi-sites d'entreprise",
-    excerpt:
-      "Segmentation VLAN, routage inter-sites, QoS et priorisation du trafic pour une plateforme immobilière.",
-    date: "2026-06-12",
-    read: "8 min",
-    tag: "Réseau",
-    stack: ["VLAN", "QoS", "Routage IPv4", "Cisco Packet Tracer"],
-    repo: "", // <-- lien GitHub du projet (optionnel)
-    how: [
-      "Objectif : relier plusieurs sites d'une agence immobilière avec un réseau segmenté, sécurisé et priorisé selon les usages.",
-      "J'ai découpé le réseau en VLAN (postes, serveurs, voix, invités) pour isoler les flux, puis mis en place le routage inter-VLAN et inter-sites.",
-      "La QoS priorise la voix et les flux métier critiques. Le tout a été maquetté et validé sous Cisco Packet Tracer avant déploiement.",
     ],
   },
   {

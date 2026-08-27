@@ -1,6 +1,6 @@
 import { Users, MessageCircle, Shield, Inbox, Bot, Search, Film, Tv, Captions, Download, Lock, Folder, Play, Boxes, LayoutDashboard, Bell, ChevronDown } from "lucide-react";
 import { Section, Eyebrow, SectionHeading } from "../components/ui";
-import { HOMELAB_INTRO, HOMELAB_STACK } from "../data/content";
+import { HOMELAB_INTRO, HOMELAB_STACK, HOMELAB_FLOW, HOMELAB_NOTES } from "../data/content";
 
 const ICONS = {
   Users, MessageCircle, Shield, Inbox, Bot, Search, Film, Tv,
@@ -103,6 +103,43 @@ export default function Homelab({ t }) {
               <Layer t={t} layer={layer} />
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* Cycle d'une demande + points clés */}
+      <div className="mt-12 grid grid-cols-1 gap-10 md:grid-cols-2">
+        <div>
+          <h3 className="mb-4 text-lg font-bold uppercase tracking-wider" style={{ color: t.muted }}>
+            Le cycle d'une demande
+          </h3>
+          <ol className="list-decimal space-y-2 pl-5">
+            {HOMELAB_FLOW.map((s, i) => (
+              <li key={i} className="text-sm leading-relaxed" style={{ color: t.muted }}>
+                {s}
+              </li>
+            ))}
+          </ol>
+        </div>
+        <div>
+          <h3 className="mb-4 text-lg font-bold uppercase tracking-wider" style={{ color: t.muted }}>
+            Points clés
+          </h3>
+          <div className="flex flex-col gap-3">
+            {HOMELAB_NOTES.map((n, i) => (
+              <div
+                key={i}
+                className="rounded-xl p-4"
+                style={{ backgroundColor: t.card, border: `1px solid ${t.border}` }}
+              >
+                <p className="text-sm font-bold" style={{ color: t.text }}>
+                  {n.title}
+                </p>
+                <p className="mt-1 text-sm leading-relaxed" style={{ color: t.muted }}>
+                  {n.text}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </Section>
