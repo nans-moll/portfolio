@@ -5,7 +5,4 @@ services:
     container_name: portfolio
     restart: unless-stopped
     ports:
-      # hôte:conteneur — le portfolio sera dispo sur http://IP_DU_SERVEUR:8080
-      # Derrière un reverse proxy, tu peux passer en "127.0.0.1:8080:80"
-      # pour ne pas exposer le port directement.
       - "8080:80"
