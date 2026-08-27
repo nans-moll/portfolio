@@ -629,6 +629,16 @@ FROM stats_mysql_connection_pool;`,
         type: "p",
         text: "Avec cette architecture, la panne d'un seul serveur web ou d'un seul nœud de base de données n'interrompt plus le service : Nginx redistribue le trafic HTTP restant, et Galera continue de répondre avec les nœuds encore disponibles, ProxySQL absorbant la répartition des requêtes SQL. C'est loin d'être une architecture « enterprise-grade » complète (pas de vraie détection de panne côté Nginx par exemple), mais ça couvre déjà l'essentiel de ce qu'on attend d'une infrastructure tolérante aux pannes à cette échelle.",
       },
+      { type: "h", text: "Ce que ça m'apporte" },
+      {
+        type: "p",
+        text: "Ce projet m'a fait comprendre la haute disponibilité de façon concrète : comment éviter tout point de défaillance unique, aussi bien côté web (répartition par Nginx) que côté base de données (cluster Galera + ProxySQL). J'y ai renforcé mes bases réseau, ma maîtrise de Nginx et de MariaDB, et appris à raisonner en termes de tolérance aux pannes — des compétences directement utiles pour mon objectif d'alternance en infra & cloud.",
+      },
+      { type: "h", text: "Ressenti" },
+      {
+        type: "p",
+        text: "C'est un projet exigeant mais très formateur : faire tenir ensemble load balancing, réplication synchrone et répartition des requêtes SQL demande de la rigueur et pas mal de tests. Voir l'architecture continuer à répondre alors qu'on coupe volontairement un nœud est vraiment satisfaisant. Je reste conscient que ce n'est pas encore une archi « enterprise-grade » complète, mais elle couvre déjà l'essentiel et m'a donné une vision claire de ce qu'implique réellement la haute disponibilité.",
+      },
     ],
   },
   {
@@ -670,36 +680,6 @@ FROM stats_mysql_connection_pool;`,
         type: "p",
         text: "C'est ce qui me fait le plus progresser : je touche à la virtualisation, au réseau, au stockage, à Docker et à la supervision, et surtout j'apprends à documenter et à reconstruire proprement. Beaucoup de ce que j'y expérimente me ressert directement en cours et en stage.",
       },
-    ],
-  },
-  {
-    title: "Auto-héberger ses services avec Docker",
-    excerpt:
-      "Réseaux Docker, volumes, reverse proxy et bonnes pratiques pour tout garder sous contrôle.",
-    date: "2026-04-18",
-    read: "7 min",
-    tag: "DevOps",
-    stack: ["Docker", "Linux", "Reverse proxy"],
-    repo: "",
-    how: [
-      "L'idée : passer d'installations manuelles à des services conteneurisés, reproductibles et faciles à maintenir.",
-      "Je m'appuie sur les réseaux et volumes Docker pour isoler et persister les données, avec un reverse proxy en frontal pour router les domaines.",
-      "Résultat : une stack que je peux versionner, sauvegarder et redéployer en quelques commandes.",
-    ],
-  },
-  {
-    title: "Débuter avec Wireshark pour analyser son réseau",
-    excerpt:
-      "Capturer, filtrer et lire du trafic réseau pour diagnostiquer ce qui se passe vraiment sur le fil.",
-    date: "2026-03-27",
-    read: "5 min",
-    tag: "Réseau",
-    stack: ["Wireshark", "TCP/IP"],
-    repo: "",
-    how: [
-      "Comprendre un problème réseau commence souvent par regarder les paquets eux-mêmes.",
-      "Je montre comment capturer le trafic, appliquer des filtres pertinents et suivre une conversation TCP de bout en bout.",
-      "L'objectif : savoir isoler rapidement la source d'une latence ou d'une coupure.",
     ],
   },
 ];
