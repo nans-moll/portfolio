@@ -47,7 +47,9 @@ export default function Contact({ t }) {
 
         <div className="flex items-start sm:justify-end">
           <a
-            href="#"
+            href={`${import.meta.env.BASE_URL}cv.pdf`}
+            target="_blank"
+            rel="noreferrer"
             className="inline-flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold transition-transform hover:-translate-y-0.5"
             style={{ backgroundColor: t.btnBg, color: t.btnText, boxShadow: t.glowBtn }}
           >
