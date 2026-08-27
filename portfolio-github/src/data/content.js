@@ -193,6 +193,59 @@ export const HOMELAB_NOTES = [
   },
 ];
 
+// Détail des services par couche (tableaux).
+export const HOMELAB_SERVICES = [
+  {
+    layer: "Diffusion",
+    rows: [
+      ["Jellyfin", ":8096", "Serveur de streaming (« Netflix perso »), accessible uniquement via VPN."],
+      ["Jellyseerr", ":5055", "Interface de demandes de films/séries, transmises à Radarr et Sonarr."],
+    ],
+  },
+  {
+    layer: "Téléchargement",
+    rows: [
+      ["gluetun + qBittorrent", ":8081", "Client torrent encapsulé dans un tunnel ProtonVPN WireGuard (kill-switch)."],
+      ["SABnzbd", ":8080", "Téléchargement Usenet (provider Frugal)."],
+    ],
+  },
+  {
+    layer: "Automatisation *arr",
+    rows: [
+      ["Radarr", ":7878", "Films : recherche, téléchargement, renommage, rangement dans /mnt/medias/films."],
+      ["Sonarr", ":8989", "Idem pour les séries → /mnt/medias/series."],
+      ["Prowlarr", ":9696", "Gestionnaire d'indexeurs centralisé pour Radarr et Sonarr."],
+      ["Bazarr", ":6767", "Téléchargement automatique des sous-titres."],
+    ],
+  },
+  {
+    layer: "Infra & bots",
+    rows: [
+      ["Traefik", ":80/:443", "Reverse proxy : noms de domaine et HTTPS pour les services."],
+      ["Portainer", ":9443", "Interface web de gestion Docker."],
+      ["Homarr", ":7575", "Dashboard d'accueil regroupant les services."],
+      ["jellyseerr-discord-bot", ":5000", "Bot Discord maison (Python) lié à Jellyseerr."],
+      ["Discarr", "—", "Notifications Discord sur les téléchargements."],
+    ],
+  },
+];
+
+// Répartition du stockage.
+export const HOMELAB_STORAGE = {
+  head: ["Volume", "Capacité", "Usage", "Contenu"],
+  rows: [
+    ["/mnt/medias", "3,4 To", "311 Go", "films/, series/, downloads/ (partagé via /data), configs"],
+    ["/home", "60 Go", "16 %", "Données Docker (qbit-vpn, sabnzbd, homarr…)"],
+    ["Racine système", "9,8 Go", "58 %", "OS Debian"],
+  ],
+};
+
+// Points de vigilance / bonnes pratiques.
+export const HOMELAB_VIGILANCE = [
+  "Supervision de l'espace disque (logs, images Docker) avec un docker system prune périodique.",
+  "Interfaces d'administration (Portainer, dashboard Traefik, *arr) non exposées publiquement ; Jellyfin isolé derrière VPN.",
+];
+
 export const POSTS = [
   {
     title: "Opération Sentinel — infra sécurisée & SOC",
@@ -533,14 +586,40 @@ FROM stats_mysql_connection_pool;`,
     excerpt:
       "Comment j'héberge mes services chez moi : machines virtuelles, conteneurs LXC et organisation du stockage.",
     date: "2026-05-03",
-    read: "6 min",
+    read: "7 min",
     tag: "Homelab",
-    stack: ["Proxmox", "Linux Debian", "Docker"],
+    stack: ["Proxmox", "Debian", "Docker", "LXC", "Traefik", "VPN"],
     repo: "",
-    how: [
-      "Point de départ : un serveur à la maison pour héberger mes propres services et m'entraîner sur de vraies infras.",
-      "J'installe Proxmox comme hyperviseur, puis je répartis les services entre machines virtuelles et conteneurs LXC selon les besoins en isolation.",
-      "Le stockage est organisé par usage, et je documente chaque brique pour pouvoir tout reconstruire rapidement.",
+    body: [
+      {
+        type: "p",
+        text: "Mon homelab, c'est mon terrain d'apprentissage : un serveur à la maison qui me permet d'héberger mes propres services et de m'entraîner sur de vraies infrastructures, sans risque pour de la production.",
+      },
+      { type: "h", text: "Proxmox comme hyperviseur" },
+      {
+        type: "p",
+        text: "Tout repose sur Proxmox, qui me permet de faire tourner plusieurs environnements isolés sur une seule machine : des machines virtuelles (VM) pour les gros services, et des conteneurs LXC, plus légers, pour les services simples. Je choisis l'un ou l'autre selon le besoin d'isolation et de ressources.",
+      },
+      { type: "h", text: "Ce que j'y fais tourner" },
+      {
+        type: "p",
+        text: "La pièce maîtresse est une VM Debian (docker-tf) qui héberge une stack média complète en Docker (14 conteneurs) : téléchargement, automatisation *arr et diffusion via Jellyfin — le tout détaillé dans la section Homelab de ce site. À côté, je monte d'autres VM et conteneurs LXC pour tester des outils, du DNS interne ou de nouveaux services avant de les adopter.",
+      },
+      { type: "h", text: "Organisation du stockage" },
+      {
+        type: "p",
+        text: "Le stockage est séparé par usage : un grand volume /mnt/medias (~3,4 To) pour les médias et les données des services, et /home pour les données Docker. Un montage partagé /data permet aux services de téléchargement et d'automatisation de travailler sur les mêmes fichiers, via des hardlinks — pas de copie inutile et un import immédiat.",
+      },
+      { type: "h", text: "Réseau & accès" },
+      {
+        type: "p",
+        text: "L'accès aux services passe par un reverse proxy (Traefik) et un VPN pour les connexions distantes, avec une résolution interne assurée par un DNS local. L'objectif : garder tout facilement accessible pour moi, mais fermé depuis l'extérieur.",
+      },
+      { type: "h", text: "Ce que ça m'apporte" },
+      {
+        type: "p",
+        text: "C'est ce qui me fait le plus progresser : je touche à la virtualisation, au réseau, au stockage, à Docker et à la supervision, et surtout j'apprends à documenter et à reconstruire proprement. Beaucoup de ce que j'y expérimente me ressert directement en cours et en stage.",
+      },
     ],
   },
   {
