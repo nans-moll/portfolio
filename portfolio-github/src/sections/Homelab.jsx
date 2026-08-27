@@ -1,6 +1,6 @@
 import { Users, MessageCircle, Shield, Inbox, Bot, Search, Film, Tv, Captions, Download, Lock, Folder, Play, Boxes, LayoutDashboard, Bell, ChevronDown } from "lucide-react";
 import { Section, Eyebrow, SectionHeading } from "../components/ui";
-import { HOMELAB_INTRO, HOMELAB_STACK, HOMELAB_FLOW, HOMELAB_NOTES } from "../data/content";
+import { HOMELAB_INTRO, HOMELAB_STACK, HOMELAB_FLOW, HOMELAB_NOTES, HOMELAB_SERVICES, HOMELAB_STORAGE, HOMELAB_VIGILANCE } from "../data/content";
 
 const ICONS = {
   Users, MessageCircle, Shield, Inbox, Bot, Search, Film, Tv,
@@ -79,6 +79,43 @@ function Connector({ t }) {
   );
 }
 
+function Table({ t, head, rows }) {
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full text-left text-sm" style={{ color: t.muted }}>
+        <thead>
+          <tr>
+            {head.map((h, i) => (
+              <th
+                key={i}
+                className="border-b px-2 py-2 font-semibold"
+                style={{ borderColor: t.border, color: t.text }}
+              >
+                {h}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r, i) => (
+            <tr key={i}>
+              {r.map((c, j) => (
+                <td
+                  key={j}
+                  className="border-b px-2 py-2 align-top"
+                  style={{ borderColor: t.border, color: j === 0 ? t.text : t.muted }}
+                >
+                  {c}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 export default function Homelab({ t }) {
   return (
     <Section id="homelab">
@@ -141,6 +178,48 @@ export default function Homelab({ t }) {
             ))}
           </div>
         </div>
+      </div>
+
+      {/* Détail des services par couche */}
+      <div className="mt-14">
+        <h3 className="mb-6 text-lg font-bold uppercase tracking-wider" style={{ color: t.muted }}>
+          Détail des services
+        </h3>
+        <div className="flex flex-col gap-8">
+          {HOMELAB_SERVICES.map((grp) => (
+            <div key={grp.layer}>
+              <p
+                className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]"
+                style={{ color: t.accent }}
+              >
+                {grp.layer}
+              </p>
+              <Table t={t} head={["Service", "Port", "Rôle"]} rows={grp.rows} />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Stockage */}
+      <div className="mt-14">
+        <h3 className="mb-6 text-lg font-bold uppercase tracking-wider" style={{ color: t.muted }}>
+          Stockage
+        </h3>
+        <Table t={t} head={HOMELAB_STORAGE.head} rows={HOMELAB_STORAGE.rows} />
+      </div>
+
+      {/* Points de vigilance */}
+      <div className="mt-14">
+        <h3 className="mb-4 text-lg font-bold uppercase tracking-wider" style={{ color: t.muted }}>
+          Points de vigilance
+        </h3>
+        <ul className="flex list-disc flex-col gap-2 pl-5">
+          {HOMELAB_VIGILANCE.map((v, i) => (
+            <li key={i} className="text-sm leading-relaxed" style={{ color: t.muted }}>
+              {v}
+            </li>
+          ))}
+        </ul>
       </div>
     </Section>
   );
