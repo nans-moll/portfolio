@@ -248,9 +248,59 @@ export const HOMELAB_VIGILANCE = [
 
 export const POSTS = [
   {
+    title: "Comment j'ai construit ce portfolio",
+    excerpt:
+      "Retour sur la création de ce site : stack React/Vite, thème cyberpunk fait main, et un déploiement mouvementé entre mon homelab et GitHub Pages.",
+    date: "2026",
+    read: "6 min",
+    tag: "Web",
+    stack: ["React", "Vite", "Tailwind CSS", "Docker", "Traefik", "GitHub Actions"],
+    repo: "https://github.com/nans-moll/portfolio",
+    body: [
+      {
+        type: "p",
+        text: "Je voulais un portfolio qui me ressemble : à la fois une vitrine de mes projets et un petit blog technique, avec une vraie identité visuelle plutôt qu'un template.",
+      },
+      { type: "h", text: "La stack technique" },
+      {
+        type: "p",
+        text: "Le site est fait en React avec Vite (rapide à développer et à builder) et Tailwind CSS pour le style, avec les icônes lucide. J'ai organisé le projet en plusieurs fichiers, en séparant le contenu (mes textes, projets, compétences) du code d'affichage — comme ça, mettre à jour un projet se fait en éditant un seul fichier de données.",
+      },
+      { type: "h", text: "Le design" },
+      {
+        type: "p",
+        text: "L'ambiance est un thème cyberpunk / synthwave fait main : fond sombre, grille en perspective, skyline néon dessiné en SVG, câbles latéraux qui réagissent au scroll, et un mode jour/nuit. Tout est en couleurs de thème, donc facile à réajuster.",
+      },
+      { type: "h", text: "Le déploiement… et les galères" },
+      {
+        type: "p",
+        text: "L'idée de départ était de l'héberger sur mon propre homelab. J'ai conteneurisé le site (Docker + nginx) et je l'ai branché derrière Traefik avec un nom de domaine et du HTTPS via Cloudflare. Techniquement, ça a marché — mais plusieurs obstacles se sont accumulés :",
+      },
+      {
+        type: "ul",
+        items: [
+          "Conflit de port : le 8080 était déjà pris par un autre service (SABnzbd). Réglé en passant tout par Traefik, sans exposer de port.",
+          "Résolution DNS interne : le site répondait bien côté serveur, mais mon navigateur n'y accédait pas — DNS sécurisé du navigateur et entrée DNS interne manquante.",
+          "Accès SSH bloqué : après plusieurs connexions rapprochées, mon IP s'est fait bannir (fail2ban / CrowdSec), me coupant l'accès au serveur au mauvais moment.",
+          "Environnement de dev : impossible d'installer Node proprement sur mon PC Windows, ce qui compliquait les tests en local.",
+        ],
+      },
+      { type: "h", text: "Pourquoi GitHub Pages (pour l'instant)" },
+      {
+        type: "p",
+        text: "Face à ces soucis d'accès, et pour avoir quelque chose de fiable rapidement, j'héberge finalement le site sur GitHub Pages — un peu à contre-cœur, car j'aurais préféré le servir depuis mon homelab. Un workflow GitHub Actions build et publie le site automatiquement à chaque commit, sans que j'aie besoin de Node en local.",
+      },
+      { type: "h", text: "La suite" },
+      {
+        type: "p",
+        text: "L'objectif reste de le rapatrier sur mon infra maison une fois les problèmes d'accès (DNS interne, bannissement SSH) réglés proprement. En attendant, GitHub Pages fait très bien le travail.",
+      },
+    ],
+  },
+  {
     title: "Opération Sentinel — infra sécurisée & SOC",
     excerpt:
-      "Projet d'équipe (Ynov) : déployer et sécuriser une infra d'entreprise segmentée en 4 VLAN (OPNsense, Traefik, PKI), avec supervision Wazuh + Grafana/Loki et un exercice Red Team / Blue Team.",
+      "Projet d'équipe à Ynov : concevoir et sécuriser de A à Z l'infra d'une entreprise — segmentation en 4 VLAN, pare-feu OPNsense, PKI et TLS, supervision Wazuh + Grafana/Loki, puis mise à l'épreuve en Red Team / Blue Team.",
     date: "2026",
     read: "9 min",
     tag: "Cybersécurité",
@@ -386,7 +436,7 @@ export const POSTS = [
   {
     title: "Monter un cluster web + base de données haute disponibilité avec Nginx, Galera et ProxySQL",
     excerpt:
-      "Répartir la charge entre 3 serveurs web avec Nginx, et assurer la continuité de service côté base de données avec un cluster MariaDB/Galera piloté par ProxySQL.",
+      "Concevoir une infra web sans point de défaillance : 3 serveurs web répartis par Nginx, et une base de données en cluster MariaDB/Galera pilotée par ProxySQL pour garantir la continuité de service.",
     date: "2026-07-15",
     read: "7 min",
     tag: "Haute dispo",
