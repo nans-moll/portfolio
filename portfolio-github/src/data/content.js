@@ -246,6 +246,42 @@ export const HOMELAB_VIGILANCE = [
   "Interfaces d'administration (Portainer, dashboard Traefik, *arr) non exposées publiquement ; Jellyfin isolé derrière VPN.",
 ];
 
+// Opération Sentinel — segmentation réseau en 4 VLAN.
+export const SENTINEL_VLANS = [
+  {
+    id: "VLAN 10 · DMZ",
+    role: "Exposé sur Internet",
+    services: ["Traefik (reverse proxy)", "Nginx (site vitrine)", "TLS Let's Encrypt"],
+  },
+  {
+    id: "VLAN 20 · SRV",
+    role: "Applicatifs internes",
+    services: ["Vaultwarden, Outline", "Portainer, Uptime Kuma", "Technitium DNS", "PKI interne (step-ca)"],
+  },
+  {
+    id: "VLAN 30 · LAN",
+    role: "Postes de travail",
+    services: ["Accès applicatif via reverse proxy", "Aucun accès direct au SRV"],
+  },
+  {
+    id: "VLAN 99 · MGMT",
+    role: "Administration",
+    services: ["Administration Proxmox", "Wazuh (SIEM)", "Grafana / Loki", "SSH par clés uniquement"],
+  },
+];
+
+// Opération Sentinel — chantiers du projet (travail d'équipe).
+export const SENTINEL_CHANTIERS = {
+  head: ["Chantier", "Ce qu'on a livré"],
+  rows: [
+    ["Architecture réseau", "Segmentation en 4 VLAN sur OPNsense, plan d'adressage, matrice de flux, règles en default deny."],
+    ["Résolution & chiffrement", "Technitium DNS en interne, PKI avec step-ca, Let's Encrypt sur Traefik côté DMZ."],
+    ["Services & exposition", "Traefik en reverse proxy (DMZ + SRV) avec auto-discovery Docker, Nginx, Portainer, Outline, Vaultwarden, Uptime Kuma."],
+    ["Durcissement", "SSH par clés uniquement, fail2ban, CrowdSec avec bouncer Traefik, scan des images via Trivy."],
+    ["Supervision & détection", "Wazuh en SIEM (mapping MITRE ATT&CK), stack Grafana / Loki / Promtail, tableaux de bord et alerting."],
+  ],
+};
+
 export const POSTS = [
   {
     title: "Comment j'ai construit ce portfolio",
@@ -321,23 +357,24 @@ export const POSTS = [
     body: [
       {
         type: "p",
-        text: "Projet d'équipe (3 personnes) réalisé dans le cadre du module cybersécurité à Ynov : déployer et sécuriser de bout en bout l'infrastructure IT d'une entreprise fictive, du réseau jusqu'à la supervision de sécurité, puis la mettre à l'épreuve par un exercice Red Team / Blue Team.",
+        text: "Projet d'équipe (3 personnes) réalisé dans le cadre du module cybersécurité à Ynov. L'objectif final : livrer de bout en bout l'infrastructure IT sécurisée d'une PME fictive — baptisée « Opération Sentinel » — avant de la mettre nous-mêmes à l'épreuve lors d'un exercice Red Team / Blue Team.",
+      },
+      {
+        type: "p",
+        text: "Le scénario mettait en scène une société d'environ 50 salariés, avec les besoins habituels d'une structure de cette taille : exposer certains services sur Internet, héberger des applicatifs internes, connecter des postes de travail, et donner à l'équipe d'administration les moyens de tout piloter sans ouvrir de faille. Seul le client était inventé : côté technique, tout était bien réel — machines virtuelles, certificats, pare-feu et SIEM compris.",
+      },
+      {
+        type: "p",
+        text: "Le projet s'est déroulé sur 3 semaines, juste après une phase d'apprentissage (lecture de documentation, prise en main des outils) qui nous a permis d'aborder le déploiement en étant préparés.",
       },
       { type: "h", text: "Architecture réseau — 4 VLAN" },
       {
         type: "p",
-        text: "Segmentation stricte : aucun service interne n'est joignable depuis Internet, et tous les flux inter-VLAN sont filtrés par OPNsense en « default deny ».",
+        text: "Segmentation stricte : chaque VLAN a un rôle unique, aucun service interne n'est joignable depuis Internet, et tout flux entre deux zones doit être explicitement autorisé (OPNsense en « default deny »).",
       },
-      {
-        type: "table",
-        head: ["VLAN", "Sous-réseau", "Rôle", "Services"],
-        rows: [
-          ["10", "10.70.10.0/24", "DMZ (exposé)", "Traefik, Nginx, mail"],
-          ["20", "10.70.20.0/24", "SRV (interne)", "Portainer, Outline, Vaultwarden, Wazuh, Grafana/Loki"],
-          ["30", "10.70.30.0/24", "LAN (postes)", "Postes, accès services via DNS"],
-          ["40", "10.70.40.0/24", "MGMT (admin)", "SSH, OPNsense, Technitium DNS"],
-        ],
-      },
+      { type: "vlans", items: SENTINEL_VLANS },
+      { type: "h", text: "Les chantiers du projet" },
+      { type: "table", head: SENTINEL_CHANTIERS.head, rows: SENTINEL_CHANTIERS.rows },
       { type: "h", text: "Déroulé en 4 phases" },
       {
         type: "ul",
