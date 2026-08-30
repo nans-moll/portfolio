@@ -46,12 +46,4 @@ src/
 └─ index.css           → directives Tailwind + scroll fluide
 ```
 
-## À personnaliser
 
-- **`src/data/content.js`** : tes infos, projets, formations, etc.
-- **`ME.linkedin`** : remplace le placeholder par ton vrai profil LinkedIn.
-- **Photo** : dans `src/sections/About.jsx`, remplace le bloc avec les initiales par une `<img />`.
-- **CV** : dans `src/sections/Contact.jsx` (et le bouton du Hero), mets le lien vers ton PDF.
-- **Projets** : renseigne le champ `repo` d'un projet dans `content.js` pour afficher le bouton « Voir le code ».
-- **Couleurs / intensité du décor** : `src/theme.js` et les composants `Cityscape` / `SynthGrid` / `SideCables`.
-```
